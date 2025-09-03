@@ -32,8 +32,8 @@ with Diagram("DIAGRAMA DE SOLUÇÃO", show=True, direction="LR", graph_attr=grap
             with Cluster("Docker"):
                 with Cluster("Front-end", graph_attr=cluster_attr["graph_attr"]):
                     js = JavaScript("JS")
-                    html = Custom("HTML", "./html.png")
-                    css = Custom("CSS", "./css.png")
+                    html = Custom("HTML", "./Imagens/html.png")
+                    css = Custom("CSS", "./Imagens/css.png")
                     react = React("React")
                     js - html - css - react
                 
@@ -47,9 +47,8 @@ with Diagram("DIAGRAMA DE SOLUÇÃO", show=True, direction="LR", graph_attr=grap
         # Usando um cluster com rank same para alinhar CRUD e Database
         with Cluster("Backend Services", graph_attr=cluster_attr["graph_attr"]):
             # Cluster CRUD dentro do AWS
-            with Cluster("CRUD Service"):
-                with Cluster("Docker"):
-                    spring = Spring("Spring")
+            with Cluster("Docker"):
+                spring = Spring("Spring")
             
             # Cluster Database dentro do AWS
         with Cluster("Database Service"):
@@ -59,7 +58,7 @@ with Diagram("DIAGRAMA DE SOLUÇÃO", show=True, direction="LR", graph_attr=grap
         
 
         # Timer fora do cluster
-        timer = Custom("Scheduler", "./relogio.png")
+        timer = Custom("Gatilho", "./Imagens/relogio.png")
         
         # Cluster apenas para o Python
         with Cluster("Lambda"):
@@ -70,19 +69,19 @@ with Diagram("DIAGRAMA DE SOLUÇÃO", show=True, direction="LR", graph_attr=grap
     
     # Cluster de Mensageria com SMS e Email à esquerda do Twilio
     with Cluster("Mensageria"):
-        email = Custom("Email", "./email.png")
-        sms = Custom("SMS", "./sms.png")
-        twilio = Custom("Twilio", "./twilio.png")
+        email = Custom("Email", "./Imagens/email.png")
+        sms = Custom("SMS", "./Imagens/sms.png")
+        twilio = Custom("Twilio", "./Imagens/twilio.png")
 
         mensageria = [email, sms, twilio]
 
         # Conecta Email e SMS ao Twilio horizontalmente
-        email - sms - twilio
+        email - sms << twilio
 
     # Mantém as conexões existentes e adiciona conexões com usuária
     beneficiaria >> web_stack[0]
     usuaria >> web_stack[0]
-    usuaria >> mensageria[0]  # Conecta usuária ao Email e SMS
+    usuaria << mensageria[0]  # Conecta usuária ao Email e SMS
     web_stack[-1] >> spring
     spring - mysql
     python >> mysql
