@@ -30,7 +30,7 @@ with Diagram("ARQUITETURA DE SOFTWARE", graph_attr=graph_attr, direction="LR"):
     # Database com descrição
     database = MySQL("Database\n\nArmazena os dados das\naplicações e usuários")
 
-    with Cluster("Sistema", show=False):
+    with Cluster("Sistema"):
         micro = Spring("MicroService\n\n\nCRUD de dados e regras\nde negócio")
         client = React("ClientSide Web\n\n\nVisualização do\nUsuário")
         
