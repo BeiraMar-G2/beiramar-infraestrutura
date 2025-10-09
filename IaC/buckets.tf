@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "raw" {
-  bucket = "raw-beira-mar"
+  bucket = "raw-beira-mar2"
 }
 
 resource "aws_s3_object" "raw_pastas" {
@@ -11,7 +11,7 @@ resource "aws_s3_object" "raw_pastas" {
 }
 
 resource "aws_s3_bucket" "trusted" {
-  bucket = "trusted-beira-mar"
+  bucket = "trusted-beira-mar2"
 }
 
 resource "aws_s3_object" "trusted_pastas" {
@@ -23,7 +23,7 @@ resource "aws_s3_object" "trusted_pastas" {
 }
 
 resource "aws_s3_bucket" "refined" {
-  bucket = "refined-beira-mar"
+  bucket = "refined-beira-mar2"
 }
 
 resource "aws_s3_object" "refined_pastas" {
