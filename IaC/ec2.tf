@@ -12,6 +12,27 @@ resource "aws_instance" "front1" {
   tags = {
     Name = "front-end-1"
   }
+
+  user_data = join("\n\n", [
+    "#!/bin/bash",
+    file("${path.module}/scripts/instalar_docker_amazon_linux.sh"),
+    file("${path.module}/scripts/instalar_nginx.sh")
+  ])
+
+  user_data_replace_on_change = true # para forçar atualização se o user_data mudar
+
+  connection {
+    type        = "ssh"
+    user        = "ec2-user" # Ou 'ubuntu', 'centos', dependendo da AMI que escolheu
+    private_key = file("./labsuser.pem")
+    host        = self.public_ip
+  }
+
+  provisioner "file" {
+    source      = "scripts/compose-nginx.yaml" # arquivo docker-compose para o NGINX
+    destination = "/home/ec2-user/compose.yaml"
+    # OU destination = "/home/ubuntu/compose.yaml" # se for AMI Ubuntu
+  }
 }
 
 resource "aws_instance" "front2" {
@@ -24,6 +45,27 @@ resource "aws_instance" "front2" {
 
   tags = {
     Name = "front-end-2"
+  }
+  
+  user_data = join("\n\n", [
+    "#!/bin/bash",
+    file("${path.module}/scripts/instalar_docker_amazon_linux.sh"),
+    file("${path.module}/scripts/instalar_nginx.sh")
+  ])
+
+  user_data_replace_on_change = true # para forçar atualização se o user_data mudar
+
+  connection {
+    type        = "ssh"
+    user        = "ec2-user" # Ou 'ubuntu', 'centos', dependendo da AMI que escolheu
+    private_key = file("./labsuser.pem")
+    host        = self.public_ip
+  }
+
+  provisioner "file" {
+    source      = "scripts/compose-nginx.yaml" # arquivo docker-compose para o NGINX
+    destination = "/home/ec2-user/compose.yaml"
+    # OU destination = "/home/ubuntu/compose.yaml" # se for AMI Ubuntu
   }
 }
 
