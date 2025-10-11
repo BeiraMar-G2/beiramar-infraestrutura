@@ -1,0 +1,13 @@
+services:
+  api:
+    image: amazoncorretto:21  # Imagem Java 21 da Amazon
+    container_name: api-spring  # Nome fixo do container (opcional)
+    command: sh -c "mkdir -p /usr/share/api && java -jar /usr/share/api/app_loko.jar"  # Cria pasta se não existir e roda o JAR
+    volumes: # Mapeamentos: host → container
+      - /usr/share/api:/usr/share/api  
+    ports:
+      - "8080:8080"  # Exemplo: expondo uma porta (ajuste se o app usar outra em caso de réplica na mesma instância EC2)
+
+# DICA: para ver os logs de execução da API, use o comando:
+# docker compose logs -f api      
+
