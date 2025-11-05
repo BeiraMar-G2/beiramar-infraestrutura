@@ -1,0 +1,26 @@
+# Ambientes virtuais Python
+.venv/
+venv/
+env/
+ENV/
+
+# Arquivos Python compilados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos de distribuição
+build/
+dist/
+*.egg-info/
+
+# Arquivos do VS Code
+.vscode/
+
+# Arquivos temporários
+*.tmp
+*.log
+
+# Imagens geradas pelo diagrams
+*.png
+!Imagens/*.png
