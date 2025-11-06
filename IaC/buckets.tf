@@ -4,11 +4,11 @@
 # ---------------------------------------------------------
 
 resource "aws_s3_bucket" "raw" {
-  bucket = "raw-beira-mar"
+  bucket = "raw-beira-mar-2025"
 }
 
 resource "aws_s3_bucket" "trusted" {
-  bucket = "trusted-beira-mar"
+  bucket = "trusted-beira-mar-2025"
 }
 
 resource "aws_s3_object" "trusted_pastas" {
@@ -20,7 +20,7 @@ resource "aws_s3_object" "trusted_pastas" {
 }
 
 resource "aws_s3_bucket" "refined" {
-  bucket = "refined-beira-mar"
+  bucket = "refined-beira-mar-2025"
 }
 
 resource "aws_s3_object" "refined_pastas" {
@@ -31,5 +31,5 @@ resource "aws_s3_object" "refined_pastas" {
 }
 
 resource "aws_s3_bucket" "athena_results" {
-  bucket = "athena-results-beira-mar"
+  bucket = "athena-results-beira-mar-2025"
 }

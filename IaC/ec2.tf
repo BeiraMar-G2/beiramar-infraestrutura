@@ -75,8 +75,30 @@ resource "aws_instance" "database" {
   subnet_id                   = aws_subnet.subrede_privada.id
   vpc_security_group_ids      = [aws_security_group.sg_privada.id]
   associate_public_ip_address = false
+  # AWS Academy já fornece LabRole automaticamente - não precisa de iam_instance_profile
 
   tags = {
     Name = "database"
   }
+
+  user_data = templatefile("${path.module}/scripts/setup_database_backup.sh", {
+    DB_TYPE         = var.db_type
+    DB_HOST         = "localhost"
+    DB_PORT         = var.db_port
+    DB_NAME         = var.db_name
+    DB_USER         = var.db_user
+    DB_PASSWORD     = var.db_password
+    BACKUP_BUCKET   = aws_s3_bucket.backup.id
+    SNS_TOPIC_ARN   = aws_sns_topic.backup_notifications.arn
+    AWS_REGION      = "us-east-1"
+    BACKUP_HOUR     = var.backup_hour
+    BACKUP_MINUTE   = var.backup_minute
+  })
+
+  user_data_replace_on_change = true
+
+  depends_on = [
+    aws_s3_bucket.backup,
+    aws_sns_topic.backup_notifications
+  ]
 }
